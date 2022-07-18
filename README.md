@@ -17,3 +17,4 @@ npm run build
 
 ## vue.config.js配置
 [](https://cli.vuejs.org/config)
+"# vue2-h5" 
