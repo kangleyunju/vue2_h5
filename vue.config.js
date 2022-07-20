@@ -1,4 +1,5 @@
-module.exports = {
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
 	publicPath: './', // 基本路径
 	outputDir: 'dist', // 构建时的输出目录
 	assetsDir: 'static', // 放置静态资源的目录
@@ -10,8 +11,9 @@ module.exports = {
 	productionSourceMap: false, // 是否为生产环境构建生成 source map
 	configureWebpack: () => {}, //调整内部的 webpack 配置
 	chainWebpack: () => {}, //调整内部的 webpack 配置
+	transpileDependencies: true,
 	devServer: {
-		open:true,
+		// open:true,
 		host: 'localhost',
 		port: 8200,
 		proxy: {
@@ -24,4 +26,4 @@ module.exports = {
 			}
 		}
 	}
-}
+})

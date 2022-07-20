@@ -1,6 +1,8 @@
 <template>
 	<div class="userContainer">
-		我的
+		<van-grid :column-num="3">
+		  <van-grid-item v-for="value in 15" :key="value" icon="photo-o" text="文字"/>
+		</van-grid>
 	</div>
 </template>
 

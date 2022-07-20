@@ -1,4 +1,5 @@
-export const indexRoute = [{
+
+const indexRoute= [{
 	path: 'index',
 	name: 'index',
 	component: () => import('@/views/home/page/index.vue'),
@@ -13,3 +14,5 @@ export const indexRoute = [{
 		title: 'ÎÒµÄ'
 	}
 }]
+
+export default indexRoute

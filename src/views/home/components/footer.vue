@@ -47,7 +47,7 @@
 			text-align: center;
 			color: #999;
 			&.active{
-				color: #0568bf;
+				color: #487FFC;
 			}
 			span{
 				display: block;

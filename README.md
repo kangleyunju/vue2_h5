@@ -1,5 +1,6 @@
 ## 说明
-vue2手机端demo
+vue2.7手机端demo
+typescript,启动更快,兼容部分vue3语法
 
 ## 下载
 ```
@@ -16,5 +17,4 @@ npm run build
 ```
 
 ## vue.config.js配置
-[](https://cli.vuejs.org/config)
-"# vue2-h5" 
+[vue.config.js配置](https://cli.vuejs.org/config)
