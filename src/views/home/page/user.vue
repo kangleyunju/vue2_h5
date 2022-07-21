@@ -17,7 +17,7 @@
 
 		},
 		created() {
-			console.log(22)
+
 		}
 	}
 </script>

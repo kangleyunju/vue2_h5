@@ -32,6 +32,7 @@
 		}
 	}
 </script>
+
 <style lang="scss">
 	.footerContainer {
 		display: flex;

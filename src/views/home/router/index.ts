@@ -1,18 +1,18 @@
 
-const indexRoute= [{
+const homeRoute = [{
 	path: 'index',
-	name: 'index',
+	name: 'homeIndex',
 	component: () => import('@/views/home/page/index.vue'),
 	meta: {
-		title: 'Ê×Ò³'
+		title: 'é¦–é¡µ'
 	}
 }, {
 	path: 'user',
-	name: 'indexUser',
+	name: 'homeUser',
 	component: () => import('@/views/home/page/user.vue'),
 	meta: {
-		title: 'ÎÒµÄ'
+		title: 'æˆ‘çš„'
 	}
 }]
 
-export default indexRoute
+export default homeRoute

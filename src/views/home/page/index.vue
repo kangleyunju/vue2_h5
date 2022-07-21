@@ -1,8 +1,8 @@
 <template>
 	<div class="indexContainer">
 		<van-swipe :autoplay="5000">
-		  <van-swipe-item v-for="(image, index) in images" :key="index">
-		    <img v-lazy="image" />
+		  <van-swipe-item v-for="(item, index) in images" :key="index">
+			  <img v-lazy="item" />
 		  </van-swipe-item>
 		</van-swipe>
 	</div>
@@ -13,16 +13,17 @@
 		data() {
 			return {
 			  images: [
-				'https://m15.360buyimg.com/mobilecms/jfs/t1/154356/26/24167/67804/62b0bc88E31cc0613/5addf82c08a790b7.jpg',
-				'https://m15.360buyimg.com/mobilecms/s1062x420_jfs/t1/155997/8/25275/158819/619cc945Ef6b2f763/5a77b01ee8fb753f.jpg',
+				require('@/assets/home/1.jpg'),
+				require('@/assets/home/2.jpg'),
+				require('@/assets/home/3.jpg')
 			  ]
 			}
 		},
 		methods: {
-
+			
 		},
 		created() {
-			console.log(11)
+
 		}
 	}
 </script>
@@ -30,8 +31,11 @@
 	.indexContainer {
 		.van-swipe{
 			height: 2.9rem;
-			img{
-				width: 100%;
+			.van-swipe-item{
+				img{
+					height: 100%;
+					width: 100%;
+				}
 			}
 		}
 	}
