@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import indexRoute from '@/views/home/router/index'
+import homeRoute from '@/views/home/router/index'
 
 Vue.use(VueRouter)
 
@@ -23,7 +23,7 @@ const routes: Array<RouteConfig> = [
 		path: '/home',
 		name: 'home',
 		component: () => import('@/views/home/page/layout.vue'),
-		children: indexRoute
+		children: homeRoute
 	}
 ]
 
