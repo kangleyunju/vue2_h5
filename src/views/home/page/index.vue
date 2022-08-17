@@ -1,7 +1,7 @@
 <template>
 	<div class="indexContainer">
 		<van-swipe :autoplay="5000">
-		  <van-swipe-item v-for="(item, index) in images" :key="index">
+		  <van-swipe-item v-for="(item, index) in images" :key="index" @click="go">
 			  <img v-lazy="item" />
 		  </van-swipe-item>
 		</van-swipe>
@@ -20,7 +20,9 @@
 			}
 		},
 		methods: {
-			
+			go(){
+
+			}
 		},
 		created() {
 
