@@ -1,7 +1,5 @@
 ## 说明
-vue2.7手机端demo
-typescript,启动更快,兼容部分vue3语法
-适配pc端,完美展示
+vue2.7手机端demo,typescript,启动更快,兼容部分vue3语法,适配pc端,完美展示
 
 ## 下载
 ```
@@ -18,4 +16,4 @@ npm run build
 ```
 
 ## vue.config.js配置
-[vue.config.js配置](https://cli.vuejs.org/config)
+[文档](https://cli.vuejs.org/config)
