@@ -13,9 +13,9 @@ module.exports = defineConfig({
 	chainWebpack: () => {}, //调整内部的 webpack 配置
 	transpileDependencies: true,
 	devServer: {
-		open:true,
-		host: 'localhost',
-		port: 8200,
+		open:false,
+		port: 8000,
+		host:'localhost',
 		proxy: {
 			'/api': {
 				target: 'https://blog.csdn.net',

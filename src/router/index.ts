@@ -7,11 +7,11 @@ Vue.use(VueRouter)
 // 解决重复点击导航路由报错
 const methodsArray = ['push', 'replace']
 methodsArray.forEach((method) => {
-  const methodGen = VueRouter.prototype[method]
-  VueRouter.prototype[method] = function(location, onResolve, onReject) {
-    if (onResolve || onReject) return methodGen.call(this, location, onResolve, onReject)
-    return methodGen.call(this, location).catch((err) => {})
-  }
+	const methodGen = VueRouter.prototype[method]
+	VueRouter.prototype[method] = function(location, onResolve, onReject) {
+		if (onResolve || onReject) return methodGen.call(this, location, onResolve, onReject)
+		return methodGen.call(this, location).catch((err) => { })
+	}
 })
 
 const routes: Array<RouteConfig> = [
