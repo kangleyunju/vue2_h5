@@ -4,14 +4,14 @@ const homeRoute = [{
 	name: 'homeIndex',
 	component: () => import('@/views/home/page/index.vue'),
 	meta: {
-		title: 'é¦–é¡µ'
+		title: 'Ê×Ò³'
 	}
 }, {
 	path: 'user',
 	name: 'homeUser',
 	component: () => import('@/views/home/page/user.vue'),
 	meta: {
-		title: 'æˆ‘çš„'
+		title: 'ÎÒµÄ'
 	}
 }]
 

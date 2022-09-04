@@ -8,6 +8,9 @@ import { Lazyload } from 'vant';
 import 'vant/lib/index.css';
 import '@vant/touch-emulator';//监听pc端的 mouse 事件
 
+import global from '@/base/global.js'
+Vue.mixin(global)
+
 Vue.use(Vant).use(Lazyload);
 
 Vue.config.productionTip = false

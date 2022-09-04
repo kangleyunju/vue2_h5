@@ -1,8 +1,8 @@
 <template>
 	<div class="userContainer">
-		<van-grid :column-num="3">
-		  <van-grid-item v-for="value in 15" :key="value" icon="photo-o" text="文字"/>
-		</van-grid>
+		<div v-for="(item,index) in list" :key="index" class="cont" @click="jump(item.path)">
+			<span>{{item.name}}</span>
+		</div>
 	</div>
 </template>
 
@@ -10,7 +10,13 @@
 	export default {
 		data() {
 			return {
-				
+				list:[{
+					name:'Grid宫格',
+					path:'/tool/grid'
+				},{
+					name:'DatetimePicker时间',
+					path:'/tool/time'
+				}]
 			}
 		},
 		methods: {
@@ -23,6 +29,16 @@
 </script>
 <style lang="scss">
 	.userContainer {
-
+		padding-top: 0.3rem;
+		.cont{
+			height: 0.8rem;
+			background: #fff;
+			margin: 0 0.2rem;
+			border-radius: 0.4rem;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 0.3rem;
+		}
 	}
 </style>
