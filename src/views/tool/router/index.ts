@@ -4,14 +4,14 @@ const toolRoute = [{
 	name: 'toolGrid',
 	component: () => import('@/views/tool/page/grid.vue'),
 	meta: {
-		title: 'Ê×Ò³'
+		title: 'å·¥å…·'
 	}
 }, {
 	path: 'time',
 	name: 'toolTime',
 	component: () => import('@/views/tool/page/time.vue'),
 	meta: {
-		title: 'ÎÒµÄ'
+		title: 'æ—¶é—´'
 	}
 }]
 

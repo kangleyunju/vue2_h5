@@ -17,7 +17,7 @@
 					img1:require('@/assets/home/tab_home1.png'),
 					img2:require('@/assets/home/tab_home2.png'),
 				},{
-					name:'我的',
+					name:'工具',
 					path:'/home/user',
 					img1:require('@/assets/home/tab_my1.png'),
 					img2:require('@/assets/home/tab_my2.png')
