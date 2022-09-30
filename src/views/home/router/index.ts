@@ -4,14 +4,20 @@ const homeRoute = [{
 	name: 'homeIndex',
 	component: () => import('@/views/home/page/index.vue'),
 	meta: {
-		title: 'Ê×Ò³'
+		title: 'é¦–é¡µ',
+		footer: true,
+		img1: require('@/assets/home/tab_home1.png'),
+		img2: require('@/assets/home/tab_home2.png')
 	}
 }, {
 	path: 'user',
 	name: 'homeUser',
 	component: () => import('@/views/home/page/user.vue'),
 	meta: {
-		title: 'ÎÒµÄ'
+		title: 'å·¥å…·',
+		footer: true,
+		img1: require('@/assets/home/tab_my1.png'),
+		img2: require('@/assets/home/tab_my2.png')
 	}
 }]
 

@@ -8,7 +8,7 @@ h5
 vue2，vant
 
 ### 邮箱
-249042680@qq.com
+有问题可以提Issue，或者发邮件：249042680@qq.com
 
 ### 仓库
 [gitee](https://gitee.com/kangleyunju/vue2_h5)
@@ -31,7 +31,13 @@ npm run build
 ```
 
 ### 依赖说明
+```
 npm i @vant/touch-emulator
 在pc端自动将mouse事件转换为touch事件，轮播图滑动等
+```
+```
+npm i @vant/area-data
+默认的省市区数据
+```
 
 
