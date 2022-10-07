@@ -1,5 +1,5 @@
 <template>
-	<div class="userContainer">
+	<div class="gridContainer">
 		<van-grid :column-num="3">
 		  <van-grid-item v-for="value in 15" :key="value" icon="photo-o" text="文字"/>
 		</van-grid>
@@ -17,12 +17,12 @@
 
 		},
 		created() {
-			console.log(111111111);
+
 		}
 	}
 </script>
 <style lang="scss">
-	.userContainer {
+	.gridContainer {
 
 	}
 </style>

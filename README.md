@@ -35,6 +35,10 @@ npm run build
 ```
 npm i @vant/touch-emulator
 ```
+* 默认的省市区数据
+```
+npm i @vant/area-data
+```
 
 ### 网址
 https://static-2503170c-6f74-4217-ac1a-43133fb6d1b4.bspapp.com/vue2_h5

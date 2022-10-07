@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
+module.exports = ({
 	publicPath: '/', // 基本路径
 	outputDir: 'dist', // 构建时的输出目录
 	assetsDir: 'static', // 放置静态资源的目录
@@ -15,7 +15,8 @@ module.exports = defineConfig({
 	devServer: {
 		open:false,
 		port: 8000,
-		host:'localhost',
+		historyApiFallback: true,
+		allowedHosts: "all",
 		proxy: {
 			'/api': {
 				target: 'https://blog.csdn.net',

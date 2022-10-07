@@ -4,14 +4,21 @@ const toolRoute = [{
 	name: 'toolGrid',
 	component: () => import('@/views/tool/page/grid.vue'),
 	meta: {
-		title: '��ҳ'
+		title: '工具'
 	}
 }, {
-	path: 'time',
-	name: 'toolTime',
-	component: () => import('@/views/tool/page/time.vue'),
+	path: 'form',
+	name: 'toolForm',
+	component: () => import('@/views/tool/page/form.vue'),
 	meta: {
-		title: '�ҵ�'
+		title: '表单'
+	}
+},{
+	path: 'swipe',
+	name: 'toolSwiper',
+	component: () => import('@/views/tool/page/swipe.vue'),
+	meta: {
+		title: '轮播图'
 	}
 }]
 

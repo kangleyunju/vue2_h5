@@ -1,9 +1,7 @@
 <template>
-	<div class="homeContainer">
-		<keep-alive>
-			<router-view/>
-		</keep-alive>
-		<Footer/>
+	<div class="latoutContainer">
+		<router-view />
+		<Footer v-if="$route.meta.footer" />
 	</div>
 </template>
 <script>
@@ -14,3 +12,9 @@
 		}
 	})
 </script>
+<style lang="scss">
+	.latoutContainer {
+		overflow: auto;
+		height: 100%;
+	}
+</style>

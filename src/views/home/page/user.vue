@@ -1,44 +1,36 @@
 <template>
 	<div class="userContainer">
-		<div v-for="(item,index) in list" :key="index" class="cont" @click="jump(item.path)">
-			<span>{{item.name}}</span>
-		</div>
+		<van-cell-group>
+			<van-cell :title="item.name" is-link :to="item.path" v-for="(item,index) in list" :key="index" />
+		</van-cell-group>
 	</div>
 </template>
-
 <script>
 	export default {
 		data() {
 			return {
-				list:[{
-					name:'Grid宫格',
-					path:'/tool/grid'
+				list: [{
+					name: 'Grid宫格',
+					path: '/tool/grid'
+				}, {
+					name: 'form表单',
+					path: '/tool/form'
 				},{
-					name:'DatetimePicker时间',
-					path:'/tool/time'
+					name: 'swipe轮播图',
+					path: '/tool/swipe'
 				}]
 			}
 		},
-		methods: {
-
-		},
-		created() {
-
-		}
+		methods: {},
+		created() {}
 	}
 </script>
 <style lang="scss">
 	.userContainer {
-		padding-top: 0.3rem;
-		.cont{
-			height: 0.8rem;
-			background: #fff;
-			margin: 0 0.2rem;
-			border-radius: 0.4rem;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 0 0.3rem;
+		padding: 0.24rem;
+		.van-cell-group {
+			border-radius: 0.2rem;
+			overflow: hidden;
 		}
 	}
 </style>
