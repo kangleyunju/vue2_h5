@@ -34,7 +34,8 @@ const routes: Array<RouteConfig> = [
 ]
 
 const router = new VueRouter({
-	mode: 'history',
+	mode: 'hash',
+	base:"/vue2_h5/",//根目录直接"/"
 	routes
 })
 
