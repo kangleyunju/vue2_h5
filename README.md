@@ -1,5 +1,5 @@
 ### 简介
-vue2.7移动端，兼容部分vue3语法，启动更快，rem布局，判断设备适配pc端，完美展示
+vue2.7移动端，兼容部分vue3语法，启动更快，rem布局，判断设备适配pc端，完美展示，还在完善中
 
 ### 平台
 h5
@@ -14,6 +14,9 @@ vue2，vant
 [gitee](https://gitee.com/kangleyunju/vue2_h5)
 
 [github](https://github.com/kangleyunju/vue2_h5)
+
+### 网址
+https://static-2503170c-6f74-4217-ac1a-43133fb6d1b4.bspapp.com/vue2_h5
 
 ### 下载
 ```
@@ -40,5 +43,5 @@ npm i @vant/touch-emulator
 npm i @vant/area-data
 ```
 
-### 网址
-https://static-2503170c-6f74-4217-ac1a-43133fb6d1b4.bspapp.com/vue2_h5
+### 截图
+![demo](./images/demo.jpg)
