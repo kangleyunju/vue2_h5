@@ -11,21 +11,24 @@ vue2，vant
 有问题可以提Issue，或者发邮件：249042680@qq.com，觉得不错可以点个赞
 
 ### 仓库
-[gitee](https://gitee.com/kangleyunju/vue2_h5)
+| gitee | github |
+| --- | --- |
+| [vue2_h5](https://gitee.com/kangleyunju/vue2_h5) | [vue2_h5](https://github.com/kangleyunju/vue2_h5) |
 
-[github](https://github.com/kangleyunju/vue2_h5)
+### 网址
+https://static-2503170c-6f74-4217-ac1a-43133fb6d1b4.bspapp.com/vue2_h5
 
-### 下载
+### 步骤
+* 下载依赖
 ```
 npm install
 ```
-### 运行
+* 运行
 ```
-npm run serve
+npm run serve 
 npm run dev
 ```
-
-### 打包
+* 打包
 ```
 npm run build
 ```
@@ -39,6 +42,3 @@ npm i @vant/touch-emulator
 ```
 npm i @vant/area-data
 ```
-
-### 网址
-https://static-2503170c-6f74-4217-ac1a-43133fb6d1b4.bspapp.com/vue2_h5
