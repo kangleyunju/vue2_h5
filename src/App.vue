@@ -27,11 +27,15 @@
 	}
 </script>
 <style lang="scss">
+	h1, h2, h3, h4, h5, h6, ul {
+		margin: 0;
+		padding: 0;
+	}
 	.pc {
 		width: 375px;
 		position: fixed;
 		height: 80vh;
-		min-height: 600px;
+		min-height: 400px;
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
@@ -39,6 +43,7 @@
 		border-radius: 6px;
 		overflow-y: hidden;
 		background: #f8f8f8;
+		
 	}
 	body {
 		color: #333333;

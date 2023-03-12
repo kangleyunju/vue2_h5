@@ -22,11 +22,11 @@
 		padding: 0.8rem 0.24rem 0.24rem;
 		.main{
 			background-color: #c1ada0;
-			padding: 0.2rem 0.24rem;
+			padding: 0.2rem 0.24rem 0.2rem;
 			text-align: center;
 			border-radius: 0.2rem;
 			h2{
-				line-height: 0.3rem;
+				margin-bottom: 0.1rem;
 			}
 			div{
 				font-size: 0.32rem;
