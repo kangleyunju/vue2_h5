@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import homeRoute from '@/views/home/router/index'
 import toolRoute from '@/views/tool/router/index'
+import qiruiRoute from '@/views/qirui/router/index'
 Vue.use(VueRouter)
 
 // 解决重复点击导航路由报错
@@ -30,7 +31,13 @@ const routes: Array<RouteConfig> = [
 		name: 'tool',
 		component: () => import('@/views/home/page/layout.vue'),
 		children: toolRoute
-	}
+	},
+  {
+    path: '/qirui',
+    name: 'qirui',
+    component: () => import('@/views/home/page/layout.vue'),
+    children: qiruiRoute
+  }
 ]
 
 const router = new VueRouter({

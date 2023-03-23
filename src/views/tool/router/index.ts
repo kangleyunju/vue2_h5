@@ -20,6 +20,20 @@ const toolRoute = [{
 	meta: {
 		title: '轮播图'
 	}
+},{
+	path: 'echarts',
+	name: 'toolEcharts',
+	component: () => import('@/views/tool/page/echarts.vue'),
+	meta: {
+		title: 'echarts'
+	}
+},{
+	path: 'tab',
+	name: 'toolTab',
+	component: () => import('@/views/tool/page/tab.vue'),
+	meta: {
+		title: 'table'
+	}
 }]
 
 export default toolRoute

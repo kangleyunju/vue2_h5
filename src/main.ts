@@ -13,6 +13,10 @@ import { Lazyload } from 'vant';
 import '@vant/touch-emulator';
 //引入全局函数
 import global from '@/base/global.js'
+//引入echarts
+import * as echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 Vue.mixin(global)
 
 Vue.use(Vant).use(Lazyload);
