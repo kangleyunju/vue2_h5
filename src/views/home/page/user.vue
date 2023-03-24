@@ -20,9 +20,6 @@
 					name: 'swipe轮播图',
 					path: '/tool/swipe'
 				},{
-					name: 'echarts',
-					path: '/tool/echarts'
-				},{
 					name: 'tab标签页',
 					path: '/tool/tab'
 				},{

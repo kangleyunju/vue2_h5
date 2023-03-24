@@ -1,54 +1,56 @@
 <template>
-  <div class="saleViewContainer">
-    <div class="dataContainer">
-      <div class="title">
-        <div class="left">销售总览
-          <van-icon name="question-o" />
-        </div>
-        <div class="right">更新时间: 2023-03-15</div>
+  <div class="dataContainer">
+    <div class="title">
+      <div class="left">销售总览
+        <van-icon name="question-o" @click="$refs.tipPopup.open('xiaoshou')" />
       </div>
-      <div class="viewBox">
-        <div class="loudouChart" ref="loudouChart"></div>
-        <div class="rightData">
-          <div class="item">
-            <div>跟进率 50%</div>
-          </div>
-          <div class="item">
-            <p>有效线索率 15%</p>
-            <div>30min跟进率 35%</div>
-          </div>
-          <div class="item">
-            <p>有效到店率 35%</p>
-            <div>到店率 15%</div>
-          </div>
-          <div class="item">
-            <p>有效试驾率 15%</p>
-            <div>试驾率 15%</div>
-          </div>
-          <div class="item">
-            <p>有效下订率 15%</p>
-            <div>下订率 15%</div>
-          </div>
-          <div class="item last">
-            <p>有效线索成交率 15%</p>
-            <div>成交率 15%</div>
-          </div>
+      <div class="right">更新时间: 2023-03-15</div>
+    </div>
+    <div class="viewBox">
+      <div class="loudouChart" ref="loudouChart" :class="{center:!activeField.includes(1)}"></div>
+      <div class="rightData" v-if="activeField.includes(1)">
+        <div class="item">
+          <div>跟进率 {{saleData.followUpRate}}</div>
         </div>
-        <div class="subTitle">
-          <div>销售阶段</div>
-          <div>阶段转化率</div>
+        <div class="item">
+          <div>有效线索率 {{saleData.validLeadsRate}}</div>
+          <div>30min跟进率 {{saleData.thirtyMinutesFollowUpRate}}</div>
         </div>
-        <div class="fieldBox">
-          <div v-for="(item,index) in fieldList" :key="index" :class="{active:activeField.includes(item.value)}" @click="changeField(item.value)"><span></span>{{item.name}}</div>
+        <div class="item">
+          <div>有效到店率 {{saleData.validToStoreRate}}</div>
+          <div>到店率 {{saleData.toStoreRate}}</div>
         </div>
+        <div class="item">
+          <div>有效试驾率 {{saleData.validTestDriveRate}}</div>
+          <div>试驾率 {{saleData.testDriveRate}}</div>
+        </div>
+        <div class="item">
+          <div>有效下订率 {{saleData.validOrderRate}}</div>
+          <div>下订率 {{saleData.orderRate}}</div>
+        </div>
+        <div class="item last">
+          <div>有效线索成交率 {{saleData.validBargainRate}}</div>
+          <div>成交率 {{saleData.bargainRate}}</div>
+        </div>
+      </div>
+      <div class="subTitle">
+        <div>销售阶段</div>
+        <div>阶段转化率</div>
+      </div>
+      <div class="fieldBox">
+        <div v-for="(item,index) in fieldList" :key="index" :class="{active:activeField.includes(item.value)}" @click="changeField(item.value)"><span></span>{{item.name}}</div>
       </div>
     </div>
+    <tipPopup ref="tipPopup" />
   </div>
 </template>
 <script>
+  import tipPopup from './tipPopup'
+  import {getSaleView} from "../api"
   export default {
     data() {
       return {
+        saleData:{},
         activeField: [1, 2, 3],
         fieldList: [{
           name: '净率',
@@ -59,29 +61,39 @@
         }, {
           name: '同比',
           value: 3
-        }],
-        activeTab: 1
+        }]
       }
     },
+    components: {
+      tipPopup
+    },
     mounted() {
-      this.initChart()
+      this.getSaleView()
     },
     methods: {
-      changeTime(val){
-        
+      getSaleView(){
+        getSaleView({}).then(res=>{
+          if(res.code==0){
+            this.saleData=res.data
+            this.initChart()
+          }else{
+            this.$toast.fail(res.msg)
+          }
+        })
       },
       changeField(val) {
         const index = this.activeField.indexOf(val)
         index < 0 ? this.activeField.push(val) : this.activeField.splice(index, 1)
+        this.initChart()
       },
-      changeTab(e) {},
       initChart() {
         if (this.$refs.loudouChart) {
           var myChart = this.$echarts.init(this.$refs.loudouChart)
           var option = {
             tooltip: {
               trigger: 'item',
-              formatter: '{b} : {c}'
+              formatter: '{b} : {c}',
+              show: false
             },
             color: ["#BEF5FB", "#4ED9E9", "#4ACDDC", "#00B9CE", "#00A4B6", "#008F9F"],
             series: [{
@@ -93,36 +105,42 @@
               width: '100%',
               minSize: "50%",
               maxSize: "100%",
-              label: {
-                show: true,
-                position: 'inside'
-              },
-              labelLine: {
-                length: 10,
-                lineStyle: {
-                  width: 1,
-                  type: 'solid'
-                }
-              },
+              gap: 0.5, //间隙
+              sort:false,
               itemStyle: {
-                borderColor: '#fff',
-                borderWidth: 0.5,
                 normal: {
                   label: {
                     show: true,
-                    formatter: "{b}({c}):\n 同比{c.x} 环比{c.z}",
+                    formatter: ((params) => {
+                      const data = params.data
+                      if (this.activeField.includes(2) && this.activeField.includes(3)) {
+                        return `{a|${data.name}(${data.value})}` +`\n 同比${params.data.tb}  环比${params.data.hb}`
+                      } else if (this.activeField.includes(2)) {
+                        return `{a|${data.name}(${data.value})}` +`\n 环比${params.data.hb}`
+                      } else if (this.activeField.includes(3)) {
+                        return `{a|${data.name}(${data.value})}` +`\n 同比${params.data.tb}`
+                      } else {
+                        return `{a|${data.name}(${data.value})}`
+                      }
+                    }),
+                    rich: {
+                      'a': {
+                        fontSize: 10
+                      }
+                    },
+                    lineHeight:12,
                     position: "inner",
-                    fontSize: 10,
-                    color: '#4E5969'
+                    fontSize: 8
                   }
                 }
               },
-              emphasis: {
-                label: {
-                  // fontSize: 14
-                }
-              },
-              data: [{ value: { x: 1, y: 2, z: 3 }, name: '线索量' }, { value: 79, name: '客户量' }, { value: 69, name: '到店量' }, { value: 40, name: '试驾量' }, { value: 35, name: '下订量' }, { value: 34, name: '成交量' }]
+              data: [
+                { name: '线索量',value: this.saleData.leadsNum,  tb: this.saleData.leadsNumYoY, hb: this.saleData.leadsNumMoM }, 
+                { name: '客户量',value: this.saleData.customerNum,  tb: this.saleData.customerNumYoY, hb: this.saleData.customerNumMoM }, 
+                { name: '到店量',value: this.saleData.toStoreNum,  tb: this.saleData.toStoreNumYoY, hb: this.saleData.toStoreNumMoM }, 
+                { name: '试驾量',value: this.saleData.testDriveNum,  tb: this.saleData.testDriveNumYoY, hb: this.saleData.testDriveNumMoM }, 
+                { name: '下订量',value: this.saleData.orderNum,  tb: this.saleData.orderNumYoY, hb: this.saleData.orderNumMoM }, 
+                { name: '成交量',value: this.saleData.bargainNum,  tb: this.saleData.bargainNumYoY, hb: this.saleData.bargainNumMoM }]
             }]
           }
           myChart.setOption(option);
@@ -139,6 +157,9 @@
       .loudouChart {
         height: 186px;
         width: 254px;
+        &.center {
+          margin: 0 auto;
+        }
       }
       .rightData {
         position: absolute;
@@ -164,18 +185,14 @@
             width: 180px;
             border-bottom: 1px dashed #E6E6E6;
           }
-          p {
+          div {
             color: #a9aaba;
             text-align: center;
             transform: scale(0.7);
             transform-origin: right;
-            line-height: 6px;
           }
-          div {
+          div:last-child {
             color: #009FB1;
-            text-align: center;
-            transform: scale(0.7);
-            transform-origin: right;
           }
         }
       }

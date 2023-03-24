@@ -1,8 +1,8 @@
 <template>
-  <div class="">
+  <div class="dataTab">
     <div class="title">
       <div class="left">{{dataType==1?'战区数据':dataType==2?'渠道数据':'车型数据'}}
-        <van-icon name="question-o" @click="tipShow=true" />
+        <van-icon name="question-o" @click="openTip" />
       </div>
       <div class="right">
         <div v-for="(item,index) in btnList" :key="index" :class="{active:activeType.includes(item.value)}" @click="changeType(item.value)">
@@ -20,26 +20,21 @@
         </div>
         <div v-if="activeType.includes(1)&&!scope.row.isFold">占比</div>
         <div v-if="activeType.includes(2)&&!scope.row.isFold">环比</div>
-        <div v-if="activeType.includes(3)&&!scope.row.isFold">同比{{!scope.row.isFold}}</div>
+        <div v-if="activeType.includes(3)&&!scope.row.isFold">同比</div>
       </div>
       <div :slot="item.prop" slot-scope="scope" class="tableItem" v-for="(item,index) in propList" :key="index">
         <div>{{scope.row[item.prop]}}</div>
-        <div v-if="activeType.includes(1)&&!scope.row.isFold" :class="{red:scope.row[item.prop]>0,green:scope.row[item.prop]<0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
-        <div v-if="activeType.includes(2)&&!scope.row.isFold" :class="{red:scope.row[item.prop]>0,green:scope.row[item.prop]<0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
-        <div v-if="activeType.includes(3)&&!scope.row.isFold" :class="{red:scope.row[item.prop]>0,green:scope.row[item.prop]<0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
+        <div v-if="activeType.includes(1)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
+        <div v-if="activeType.includes(2)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
+        <div v-if="activeType.includes(3)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
       </div>
     </dataTable>
-    <van-popup v-model="tipShow">
-      <div class="popup_title">提示</div>
-      <div class="popup_content">
-        <div v-for="(item,index) in zhanquTip" :key="index">{{index}}.{{item}}</div>
-      </div>
-    </van-popup>
+    <tipPopup ref="tipPopup"/>
   </div>
 </template>
 <script>
   import dataTable from '@/components/dataTable'
-  import { zhanquTip } from './tip.js'
+  import tipPopup from './tipPopup'
   export default {
     props: {
       dataType: {
@@ -48,12 +43,11 @@
       }
     },
     components: {
-      dataTable
+      dataTable,
+      tipPopup
     },
     data() {
       return {
-        zhanquTip: zhanquTip,
-        tipShow: false,
         activeTab: 1,
         activeType: [1, 2, 3],
         btnList: [{
@@ -108,7 +102,7 @@
           label: '战区/大区',
           prop: 'zhanqu',
           width: '110px',
-          fixed:'left'
+          fixed: 'left'
         }, {
           label: '成交量',
           prop: 'chengjiao',
@@ -157,9 +151,11 @@
     },
     mounted() {
       this.getTabList()
-      console.log(this.zhanquTip)
     },
     methods: {
+      openTip(){
+        this.$refs.tipPopup.open(this.dataType==1?'zhanqu':this.dataType==2?'qudao':'chexing')
+      },
       changeType(val) {
         const index = this.activeType.indexOf(val)
         index < 0 ? this.activeType.push(val) : this.activeType.splice(index, 1)
@@ -252,6 +248,11 @@
       margin-bottom: 14px;
     }
     .data_table {
+      .table_header{
+        .headerItem{
+          justify-content: flex-start;
+        }
+      }
       .table_body {
         padding-bottom: 10px;
         .bodyItem {
@@ -271,22 +272,21 @@
             }
             div {
               text-align: right;
-              padding-right: 22px;
+              padding-right: 32px;
               height: 28px;
               line-height: 28px;
               font-size: 16px;
               img {
                 height: 15px;
                 margin-right: 6px;
+                transition: all 0.2s;
                 &.fold {
-                    -webkit-transform-origin: 0 0;
-                    -webkit-transform: rotate(-90deg) translatez(0);
-                    transform-origin: 0 0;
-                    transform: rotate(-90deg) translatez(0) translateX(-15px);
-                  }
+                  transform: rotate(-90deg);
+                }
               }
               .van-icon {
                 font-size: 12px;
+                margin-top: 2px;
               }
               &:not(:first-child) {
                 font-size: 12px;

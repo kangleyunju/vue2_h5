@@ -53,7 +53,7 @@
     methods: {
       changeSort(item) {
         if (item.sort) {
-          this.$emit('changeSort',item)
+          this.$emit('changeSort', item)
         }
       }
     },
@@ -65,8 +65,8 @@
           topBox.scrollLeft = listBox.scrollLeft
         })
         topBox.addEventListener('scroll', (e) => {
-          let scrollLeft=topBox.scrollLeft
-          topBox.scrollLeft = listBox.scrollLeft=scrollLeft
+          let scrollLeft = topBox.scrollLeft
+          topBox.scrollLeft = listBox.scrollLeft = scrollLeft
         })
       })
     }
@@ -88,49 +88,49 @@
       display: flex;
       &.sticky {
         position: sticky;
-        .headerItem {
-          border-bottom: 1px solid #f5f6f9;
-          padding: 10px 4px;
-          box-sizing: border-box;
-          color: #86909C;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-grow: 0;
-          flex-shrink: 0;
-          font-size:14px;
-          .label {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+      }
+      .headerItem {
+        border-bottom: 1px solid #f5f6f9;
+        padding: 10px 5px;
+        box-sizing: border-box;
+        color: #86909C;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 14px;
+        .label {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .sort {
+          height: 16px;
+          width: 8px;
+          position: relative;
+          transform: translateX(4px);
+          &:before {
+            position: absolute;
+            top: -1px;
+            left: 8;
+            content: '';
+            border: 4px solid transparent;
+            border-bottom-color: #96969b;
           }
-          .sort {
-            height: 16px;
-            width: 8px;
-            position: relative;
-            transform: translateX(4px);
-            &:before {
-              position: absolute;
-              top: -1px;
-              left: 8;
-              content: '';
-              border: 4px solid transparent;
-              border-bottom-color: #96969b;
-            }
-            &:after {
-              position: absolute;
-              bottom: -1px;
-              left: 0;
-              content: '';
-              border: 4px solid transparent;
-              border-top-color: #96969b;
-            }
-            &.up:before{
-              border-bottom-color: #009FB1;
-            }
-            &.down:after{
-              border-top-color: #009FB1;
-            }
+          &:after {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            content: '';
+            border: 4px solid transparent;
+            border-top-color: #96969b;
+          }
+          &.up:before {
+            border-bottom-color: #009FB1;
+          }
+          &.down:after {
+            border-top-color: #009FB1;
           }
         }
       }
@@ -144,7 +144,7 @@
       }
       .bodyItem {
         width: 100%;
-        padding: 10px 4px;
+        padding: 10px 5px;
         min-height: 40px;
         box-sizing: border-box;
         font-size: 14px;

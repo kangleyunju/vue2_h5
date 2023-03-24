@@ -13,10 +13,10 @@
       </van-tabs>
     </div>
     <!-- 销售总览 -->
-    <saleView></saleView>
+    <saleView v-if="1>2"></saleView>
     <!-- 趋势 -->
     <div class="dataContainer">
-      <van-tabs v-model="activeTab" color="#009FB1" title-active-color="#009FB1" title-inactive-color="#86909C" line-height="2px" line-width="24px" scrollspy sticky class="stickyTab" @change="changeTab">
+      <van-tabs v-model="activeTab" offset-top="40px" color="#009FB1" title-active-color="#009FB1" title-inactive-color="#86909C" line-height="2px" line-width="24px" scrollspy sticky class="stickyTab" @change="changeTab">
         <van-tab title="趋势" :name="1">
           <trendTab></trendTab>
         </van-tab>
@@ -31,6 +31,31 @@
         </van-tab>
       </van-tabs>
     </div>
+    <van-action-sheet
+      v-model="chooseShow"
+      :actions="actions"
+      cancel-text="取消"
+      close-on-click-action
+      @select="chooseTime"
+      @cancel="cancel" 
+      @click-overlay="cancel"
+      />
+      <!-- 自定义时间 -->
+    <!-- <van-calendar v-model="rangeShow" type="range" color="#009FB1" title="选择日期范围" allow-same-day @confirm="onConfirm"/> -->
+    
+    <van-calendar
+    	v-model="rangeShow"
+    	@confirm="onConfirm"
+    	color="#009FB1"
+    	:min-date="minDate"
+    	:max-date="maxDate"
+      title="选择日期范围"
+    	confirm-text="确定"
+    	confirm-disabled-text="请选择日期"
+    	:round="false"
+    	type="range"
+    	allow-same-day
+    	position="bottom" />
   </div>
 </template>
 <script>
@@ -45,35 +70,92 @@
     },
     data() {
       return {
-        activeTime:1,
-        activeTab: 1
+        activeTime: 1,
+        originalTime:1,
+        activeTab: 1,
+        popupShow: false,
+        chooseShow: false,
+        rangeShow: false,
+        show: false,
+        actions: [],
+        minDate: new Date(),
+        maxDate: new Date(),
       }
     },
     methods: {
-      changeTime(e) {},
+      cancel(e){
+        this.activeTime=this.originalTime
+      },
+      changeTime(e,b,d) {
+        const array = [{ name: '今日', value: 1 }, { name: '昨日', value: 2 }, { name: '本周', value: 3 }, { name: '上周', value: 4 }, { name: '本月', value: 5 }, { name: '上月', value: 6 }, { name: '本季度', value: 7 }, { name: '上季度', value: 8 }, { name: '本年度', value: 9 }, { name: '上年度', value: 10 }]
+        if (this.activeTime < 6) {
+          this.chooseShow = true
+          this.actions = array.filter(item => {
+            return this.activeTime * 2 == item.value || this.activeTime * 2 - 1 == item.value
+          })
+        } else {
+          this.rangeShow = true
+        }
+      },
+      chooseTime(e) {
+        console.log(e)
+        this.originalTime =this.activeTime
+      },
+      onConfirm(e) {
+        console.log(e.map(item => { return `${item.getFullYear() + 1}/${item.getMonth() + 1}/${item.getDate()}` }))
+      },
       changeTab(e) {},
+      // 获取日期
+      getDay(d, num) {
+        const date = new Date(new Date(d).setDate(new Date(d).getDate() + num))
+        const year = date.getFullYear()
+        const month = (date.getMonth() + 1 + "").padStart(2, "0")
+        const day = (date.getDate() + "").padStart(2, "0")
+        return `${year}-${month}-${day}`
+      },
+      // 是否是闰年
+      isLeap(year){
+        console.log(year)
+        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
+      },
+      getLastYearDate(d) {
+        const date = new Date(d)
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+        const lastYear = year - 1
+        const thisYearisLeap = this.isLeap(year)
+        const lastYearIsLeap = this.isLeap(lastYear)
+        if (lastYearIsLeap || (thisYearisLeap && month == 12 && day == 31)) return this.getDay(d, -366)
+        return this.getDay(d, -365)
+      },
+    },
+    mounted() {
+      this.minDate=new Date(this.getLastYearDate(new Date()))
     }
   }
 </script>
 <style lang="scss">
-  .statistics{
-    .headerBox{
-      height:40px;
+  .statistics {
+    padding-top: 40px;
+    height: 100vh;
+    .headerBox {
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       background-color: #009FB1;
       padding: 0 0 0 12px;
       position: fixed;
-      top:0;
+      top: 0;
       left: 0;
       right: 0;
       z-index: 10;
-      img{
-        height:24px;
+      img {
+        height: 24px;
       }
-      .van-tabs{
-        .van-tabs__wrap{
+      .van-tabs {
+        .van-tabs__wrap {
           height: 36px;
         }
       }
@@ -104,18 +186,11 @@
           font-size: 12px;
         }
       }
-      .van-popup{
-        width: 250px;
-        border-radius: 10px;
-        padding:10px;
-        font-size:14px;
-        .popup_title{
-          line-height:30px;
-        }
-        .popup_content{
-          max-height: 60vh;
-          overflow-y: auto;
-        }
+      .van-tab {
+        -webkit-box-flex: unset;
+        -webkit-flex: unset;
+        flex: unset;
+        margin-right: 20px;
       }
     }
   }
