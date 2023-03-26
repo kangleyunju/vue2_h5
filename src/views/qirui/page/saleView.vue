@@ -235,17 +235,5 @@
 				}
 			}
 		}
-		.stickyTab {
-			.van-tabs__wrap {
-				height: 40px;
-			}
-			.van-tabs__nav--line {
-				margin-bottom: 0;
-			}
-			.van-sticky--fixed {
-				margin: 0 10px;
-				padding: 0 12px;
-			}
-		}
 	}
 </style>

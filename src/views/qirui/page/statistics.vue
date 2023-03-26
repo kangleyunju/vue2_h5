@@ -208,6 +208,9 @@
 				.van-sticky--fixed {
 					margin: 0 22px;
 				}
+				.van-tabs__wrap {
+					height: 40px;
+				}
 			}
 		}
 	}
