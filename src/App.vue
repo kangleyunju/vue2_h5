@@ -1,5 +1,5 @@
 <template>
-	<div id="app" :class="{'pc':!isMobile}">
+	<div id="app">
 		<router-view />
 	</div>
 </template>
@@ -14,7 +14,7 @@
 			checkIsMobile() {
 				setTimeout(() => {
 					this.isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i) ? true : false
-					document.querySelector("body").style.background=this.isMobile?"#f8f8f8":`url(${require('@/assets/home/bg.jpg')})`
+					document.querySelector("body").className = this.isMobile ? 'mobile' : 'pc'
 				})
 			}
 		},
@@ -31,7 +31,7 @@
 		margin: 0;
 		padding: 0;
 	}
-	.pc {
+	.pc #app {
 		width: 375px;
 		position: fixed;
 		height: 80vh;
@@ -43,14 +43,24 @@
 		border-radius: 6px;
 		overflow-y: hidden;
 		background: #f8f8f8;
-		
 	}
 	body {
 		color: #333333;
 		margin: 0;
 		padding: 0;
 		font-size: 0.24rem;
-		//禁止复制
+		&.pc {
+			background-image: url('@/assets/home/bg.jpg');
+			background-repeat: no-repeat;
+			background-size: cover;
+			height: 100vh;
+		}
+		&.mobile {
+			background: #f8f8f8;
+		}
+	}
+	//禁止复制
+	.noCopy {
 		-moz-user-select: none;
 		-webkit-user-select: none;
 		-ms-user-select: none;

@@ -12,7 +12,7 @@
 			</van-tabs>
 		</div>
 		<!-- 销售总览 -->
-		<saleView v-if="11>2"></saleView>
+		<saleView />
 		<!-- 趋势 -->
 		<div class="dataContainer">
 			<van-tabs v-model="activeTab" offset-top="40px" color="#009FB1" title-active-color="#009FB1" title-inactive-color="#86909C" line-height="2px" line-width="24px" scrollspy sticky class="stickyTab" @change="changeTab">
@@ -203,6 +203,11 @@
 				-webkit-flex: unset;
 				flex: unset;
 				margin-right: 20px;
+			}
+			.stickyTab {
+				.van-sticky--fixed {
+					margin: 0 22px;
+				}
 			}
 		}
 	}
