@@ -18,15 +18,17 @@ vue2，vant，typescript
 ### 预览地址
 https://static-mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.next.bspapp.com/vue2_h5/
 
+https://kangleyunju.github.io/vue2_h5/
+
 ### 截图
 ![demo](./images/demo.jpg)
 
 ### 步骤
-* 下载依赖
+* 安装
 ```
 npm install
 ```
-* 运行
+* 启动
 ```
 npm run serve
 npm run dev
