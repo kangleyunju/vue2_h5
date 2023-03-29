@@ -25,8 +25,8 @@
 				<van-tab title="渠道数据" :name="3">
 					<dataTab :dataType="2"></dataTab>
 				</van-tab>
-				<van-tab title="车型数据" :name="4">
-					<dataTab :dataType="3"></dataTab>
+				<van-tab title="分布" :name="4">
+					<distributionTab></distributionTab>
 				</van-tab>
 			</van-tabs>
 		</div>
@@ -58,11 +58,13 @@
 	import saleView from './saleView'
 	import trendTab from './trendTab'
 	import dataTab from './dataTab'
+  import distributionTab from './distributionTab'
 	export default {
 		components: {
 			saleView,
 			trendTab,
-			dataTab
+			dataTab,
+      distributionTab
 		},
 		data() {
 			return {
@@ -102,7 +104,6 @@
 				return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 			},
 			confirmTime(e) {
-				console.log(e.map(item => { return `${item.getFullYear() + 1}/${item.getMonth() + 1}/${item.getDate()}` }))
 				this.rangeShow = false
 				this.isChoose = true
 				this.originalTime = this.activeTime

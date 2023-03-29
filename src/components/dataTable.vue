@@ -5,28 +5,37 @@
         <div class="label">{{item.label}}</div>
         <div class="sort" :class="{up:item.sort==3,down:item.sort==2}" v-if="item.sort>0"></div>
       </div>
-      <div class="table_row" :class="{hidden:tableData.length >0}" ref="topBox">
+      <div class="table_row" ref="topBox">
         <div v-for="(item, index) in tableHeader" :key="index" v-if="!item.fixed || item.fixed !== 'left'" class="headerItem" :style="{width:item.width,minWidth:item.minWidth}" @click="changeSort(item)">
           <div class="label">{{item.label}}</div>
           <div class="sort" :class="{up:item.sort==3,down:item.sort==2}" v-if="item.sort>0"></div>
         </div>
       </div>
     </div>
-    <div v-show="tableData && tableData.length >= 1" class="table_body">
-      <div v-for="(item, index) in tableHeader" :key="index" v-if="item.fixed && item.fixed == 'left'" :style="{width:item.width,minWidth:item.minWidth}" class="body_column">
-        <div class="bodyItem" v-for="(value, key) in tableData" :key="key" :style="{width:item.width,minWidth:item.minWidth}">
-          <slot :name="item.prop" :row="value" :index="key">{{ value[item.prop] }}</slot>
-        </div>
-      </div>
-      <div class="table_row" ref="listBox">
-        <div v-for="(item, index) in tableHeader" :key="index" v-if="!item.fixed || item.fixed !== 'left'" :style="{width:item.width,minWidth:item.minWidth}" class="body_column">
+    <template v-if="loading">
+      <van-loading vertical>加载中...</van-loading>
+    </template>
+    <template v-else>
+      <div v-show="tableData && tableData.length >0" class="table_body">
+        <div v-for="(item, index) in tableHeader" :key="index" v-if="item.fixed && item.fixed == 'left'" :style="{width:item.width,minWidth:item.minWidth}" class="body_column">
           <div class="bodyItem" v-for="(value, key) in tableData" :key="key" :style="{width:item.width,minWidth:item.minWidth}">
             <slot :name="item.prop" :row="value" :index="key">{{ value[item.prop] }}</slot>
           </div>
         </div>
+        <div class="table_row" ref="listBox">
+          <div v-for="(item, index) in tableHeader" :key="index" v-if="!item.fixed || item.fixed !== 'left'" :style="{width:item.width,minWidth:item.minWidth}" class="body_column">
+            <div class="bodyItem" v-for="(value, key) in tableData" :key="key" :style="{width:item.width,minWidth:item.minWidth}">
+              <slot :name="item.prop" :row="value" :index="key">{{ value[item.prop] }}</slot>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="table_empty" v-show="!tableData || tableData.length ==0">{{emptyText}}</div>
+      <div class="table_empty" v-show="!tableData || tableData.length ==0">
+        <img src="@/assets/empty.png">
+        <div>{{emptyText}}</div>
+      </div>
+    </template>
+    <div class="fixed_left" v-if="scrollLeft>0&&tableData.length>0"></div>
   </div>
 </template>
 <script>
@@ -48,6 +57,15 @@
       emptyText: {
         type: String,
         default: '暂无数据'
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data(){
+      return{
+        scrollLeft:0
       }
     },
     methods: {
@@ -57,24 +75,34 @@
         }
       }
     },
-    mounted() {
-      this.$nextTick(() => {
-        const topBox = this.$refs.topBox
-        const listBox = this.$refs.listBox
-        listBox.addEventListener('scroll', (e) => {
-          topBox.scrollLeft = listBox.scrollLeft
-        })
-        topBox.addEventListener('scroll', (e) => {
-          let scrollLeft = topBox.scrollLeft
-          topBox.scrollLeft = listBox.scrollLeft = scrollLeft
-        })
-      })
+    watch: {
+      loading: {
+        handler(val) {
+          if (!this.loading && this.tableData && this.tableData.length >= 1) {
+            this.$nextTick(() => {
+              const topBox = this.$refs.topBox
+              const listBox = this.$refs.listBox
+              listBox.addEventListener('scroll', (e) => {
+                topBox.scrollLeft = listBox.scrollLeft
+              })
+              topBox.addEventListener('scroll', (e) => {
+                let scrollLeft = topBox.scrollLeft
+                topBox.scrollLeft = listBox.scrollLeft = scrollLeft
+                this.scrollLeft=scrollLeft
+              })
+            })
+          }
+        },
+        immediate: true
+      }
     }
   }
 </script>
 <style scoped lang="scss">
   .data_table {
     background-color: #fff;
+    position: relative;
+    overflow: hidden;
     .table_row {
       overflow-x: auto;
       display: flex;
@@ -135,6 +163,9 @@
         }
       }
     }
+    .van-loading {
+      padding: 30px 0;
+    }
     .table_body {
       display: flex;
       .body_column {
@@ -158,9 +189,25 @@
       }
     }
     .table_empty {
-      color: #86909C;
-      line-height: 48px;
       text-align: center;
+      padding: 20px 0;
+      font-size:14px;
+      img {
+        height: 160px;
+        width: 160px;
+      }
+      div {
+        color: #86909C;
+      }
+    }
+    .fixed_left {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 110px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .12);
+      pointer-events: none; 
     }
   }
 </style>

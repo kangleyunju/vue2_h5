@@ -40,8 +40,12 @@
 </script>
 <style lang="scss">
 	.swipeContainer {
+    padding: 0 0.24rem 0.24rem;
+    margin:0.24rem;
+    border-radius: 0.12rem;
+    background-color: #fff;
 		h3 {
-			padding: 0 0.24rem;
+			line-height: 0.6rem;
 		}
 		.van-swipe {
 			height: 2.9rem;

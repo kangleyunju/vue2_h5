@@ -10,10 +10,10 @@
         </div>
       </div>
     </div>
-    <van-tabs v-if="1=='todo'" v-model="activeTab" color="#009FB1" title-active-color="#009FB1" line-height="2px" title-inactive-color="#86909C" @change="changeTab">
+    <van-tabs v-model="activeTab" color="#009FB1" title-active-color="#009FB1" line-height="2px" title-inactive-color="#86909C" @change="changeTab">
       <van-tab :title="item.title" :name="item.name" v-for="(item,index) in tabList" :key="index"></van-tab>
     </van-tabs>
-    <dataTable :tableHeader="tableHeader" :tableData="tableData" @changeSort="changeSort">
+    <dataTable :tableHeader="tableHeader" :tableData="tableData" :loading="loading" @changeSort="changeSort">
       <div slot="zhanqu" slot-scope="scope" class="tableItem firstItem">
         <div><img src="@/assets/home/arrow-down.png" :class="{fold:scope.row.isFold}" @click="scope.row.isFold=!scope.row.isFold">{{scope.row.zhanqu}}
           <van-icon name="arrow" />
@@ -29,7 +29,7 @@
         <div v-if="activeType.includes(3)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
       </div>
     </dataTable>
-    <tipPopup ref="tipPopup"/>
+    <tipPopup ref="tipPopup" />
   </div>
 </template>
 <script>
@@ -50,6 +50,7 @@
       return {
         activeTab: 1,
         activeType: [1, 2, 3],
+        loading: false,
         btnList: [{
           name: '占比',
           value: 1
@@ -61,43 +62,7 @@
           value: 3
         }],
         tabList: [],
-        tableData: [{
-          zhanqu: '东部战区',
-          chengjiao: 12,
-          xiading: 3,
-          shijia: 10,
-          daodian: 13,
-          kehu: 33,
-          xiansuo: 130,
-          isFold: false
-        }, {
-          zhanqu: '西部战区',
-          chengjiao: 777,
-          xiading: 3,
-          shijia: 10,
-          daodian: -13,
-          kehu: 33,
-          xiansuo: 130,
-          isFold: false
-        }, {
-          zhanqu: '北部战区',
-          chengjiao: 888,
-          xiading: 3,
-          shijia: 10,
-          daodian: 13,
-          kehu: 33,
-          xiansuo: 130,
-          isFold: false
-        }, {
-          zhanqu: '南部战区',
-          chengjiao: 999,
-          xiading: 3,
-          shijia: 0,
-          daodian: 13,
-          kehu: -33,
-          xiansuo: 130,
-          isFold: false
-        }],
+        tableData: [],
         tableHeader: [{
           label: '战区/大区',
           prop: 'zhanqu',
@@ -151,10 +116,51 @@
     },
     mounted() {
       this.getTabList()
+      this.loading = true
+      setTimeout(() => {
+        this.loading = false
+        this.tableData = Math.random(0, 1) > 0.5 ? [] : [{
+          zhanqu: '东部战区',
+          chengjiao: 12,
+          xiading: 3,
+          shijia: 10,
+          daodian: 13,
+          kehu: 33,
+          xiansuo: 130,
+          isFold: false
+        }, {
+          zhanqu: '西部战区',
+          chengjiao: 777,
+          xiading: 3,
+          shijia: 10,
+          daodian: -13,
+          kehu: 33,
+          xiansuo: 130,
+          isFold: false
+        }, {
+          zhanqu: '北部战区',
+          chengjiao: 888,
+          xiading: 3,
+          shijia: 10,
+          daodian: 13,
+          kehu: 33,
+          xiansuo: 130,
+          isFold: false
+        }, {
+          zhanqu: '南部战区',
+          chengjiao: 999,
+          xiading: 3,
+          shijia: 0,
+          daodian: 13,
+          kehu: -33,
+          xiansuo: 130,
+          isFold: false
+        }]
+      }, 1000)
     },
     methods: {
-      openTip(){
-        this.$refs.tipPopup.open(this.dataType==1?'zhanqu':this.dataType==2?'qudao':'chexing')
+      openTip() {
+        this.$refs.tipPopup.open(this.dataType == 1 ? 'zhanqu' : this.dataType == 2 ? 'qudao' : 'chexing')
       },
       changeType(val) {
         const index = this.activeType.indexOf(val)
@@ -248,8 +254,8 @@
       margin-bottom: 14px;
     }
     .data_table {
-      .table_header{
-        .headerItem{
+      .table_header {
+        .headerItem {
           justify-content: flex-start;
         }
       }
