@@ -25,7 +25,10 @@
 				},{
 					name: '奇瑞',
 					path: '/qirui/index'
-				}]
+				},{
+          name:'聊天室',
+          path:'/tool/room'
+        }]
 			}
 		},
 		methods: {},

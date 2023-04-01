@@ -48,12 +48,12 @@
 					<van-uploader v-model="form.img" multiple :max-count="2" :after-read="afterRead" />
 				</template>
 			</van-field>
-			<van-field v-model="form.area" label="地区选择" placeholder="选择省市区" readonly clickable @click="areaShow = true" :rules="[{ required: true, message: '请选择省市区' }]" required right-icon="arrow" />
+			<van-field v-model="form.area"  name="area" label="地区选择" placeholder="选择省市区" readonly clickable @click="areaShow = true" :rules="[{ required: true, message: '请选择省市区' }]" required right-icon="arrow" />
 			<van-field v-model="form.calendar" label="日历" placeholder="选择日期范围" readonly clickable @click="calendarShow = true" right-icon="arrow" />
 			<van-field v-model="form.mark" type="textarea" label="备注" placeholder="请输入备注" show-word-limit maxlength="50" />
 		</van-form>
 		<div class="bottomFixed">
-			<van-button type="info" plain @click="$router.go(-1)">取消</van-button>
+			<van-button type="info" plain @click="cancel">取消</van-button>
 			<van-button type="info" @click="formConfirm">确定</van-button>
 		</div>
 		<!-- 时间弹窗 -->
@@ -90,9 +90,7 @@
 			extra-key="X"
 			close-button-text="完成"
 			v-model="form.cardId"
-			@input="onInput"
-			@delete="onDelete"
-			@blur="popupShow = false" />
+			@blur="idShow = false" />
 		<van-popup
 			v-model="popupShow"
 			position="bottom">
@@ -153,17 +151,10 @@
 					file.message = "上传完成";
 				}, 1000);
 			},
-			//身份证
-			onInput(e) {
-				// if (!this.form.cardId) {
-				// 	this.form.cardId = ''
-				// }
-				// this.form.cardId = this.form.cardId + e
-				// console.log('this.form.cardId', this.form.cardId)
-			},
-			onDelete(e) {
-				// this.form.cardId -= e
-			},
+      cancel(){
+        this.$refs.form.resetValidation()
+        this.$router.go(-1)
+      },
 			//提交表单
 			formConfirm() {
 				this.$refs.form.validate().then((valid) => {

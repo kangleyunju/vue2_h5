@@ -13,7 +13,9 @@
       </div>
     </div>
     <template v-if="loading">
-      <van-loading vertical>加载中...</van-loading>
+      <div class="loadingBox">
+        <van-loading vertical>加载中...</van-loading>
+      </div>
     </template>
     <template v-else>
       <div v-show="tableData && tableData.length >0" class="table_body">
@@ -35,7 +37,11 @@
         <div>{{emptyText}}</div>
       </div>
     </template>
-    <div class="fixed_left" v-if="scrollLeft>0&&tableData.length>0"></div>
+    <div class="moreBtn" v-if="more!=''&&tableData.length >0" @click="loadMore">
+      <van-loading size="14px" v-if="more=='loading'"/>{{more=='loading'?'加载中...':more=='more'?'更多数据':'没有更多了'}}
+      <van-icon name="arrow-down" v-if="more=='more'"/>
+    </div>
+    <div class="fixed_left" :class="{more:more&&!loading&& tableData.length >0}" v-if="!loading&&tableData.length>0"></div>
   </div>
 </template>
 <script>
@@ -61,6 +67,11 @@
       loading: {
         type: Boolean,
         default: false
+      },
+      //底部加载文字 more|finish|loading
+      more: {
+        type: String,
+        default: ''
       }
     },
     data(){
@@ -69,6 +80,11 @@
       }
     },
     methods: {
+      loadMore(){
+        if(this.more=='more'){
+          this.$emit('loadMore')
+        }
+      },
       changeSort(item) {
         if (item.sort) {
           this.$emit('changeSort', item)
@@ -111,11 +127,18 @@
         height: 0;
       }
     }
+    .loadingBox{
+      .van-loading {
+        padding: 50px 0;
+      }
+    }
     .table_header {
       position: relative;
       display: flex;
       &.sticky {
         position: sticky;
+        top:0;
+        background-color: #fff;
       }
       .headerItem {
         border-bottom: 1px solid #f5f6f9;
@@ -163,9 +186,6 @@
         }
       }
     }
-    .van-loading {
-      padding: 30px 0;
-    }
     .table_body {
       display: flex;
       .body_column {
@@ -206,8 +226,26 @@
       top: 0;
       bottom: 0;
       width: 110px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, .12);
+      box-shadow: 0 -8px 10px rgba(0, 0, 0, .12);
       pointer-events: none; 
+      &.more{
+        bottom:36px;
+      }
+    }
+    .moreBtn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 0;
+      font-size: 12px;
+      color: #86909C;
+      .van-loading {
+        padding:0;
+        margin-right:4px;
+      }
+      .van-icon{
+        margin-left:2px;
+      }
     }
   }
 </style>

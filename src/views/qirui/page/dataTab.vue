@@ -13,7 +13,7 @@
 		<van-tabs v-model="activeTab" color="#009FB1" title-active-color="#009FB1" line-height="2px" line-width="24px" title-inactive-color="#86909C" @change="changeTab">
 			<van-tab :title="item.title" :name="item.name" v-for="(item,index) in tabList" :key="index"></van-tab>
 		</van-tabs>
-		<dataTable :tableHeader="tableHeader" :tableData="tableData" :loading="loading" @changeSort="changeSort">
+		<dataTable :tableHeader="tableHeader" :tableData="tableData" :more="more" :loading="loading" @changeSort="changeSort">
 			<div slot="zhanqu" slot-scope="scope" class="tableItem firstItem">
 				<div><img src="@/assets/home/arrow-down.png" :class="{fold:scope.row.isFold}" @click="scope.row.isFold=!scope.row.isFold">{{scope.row.zhanqu}}
 					<van-icon name="arrow" />
@@ -22,12 +22,14 @@
 				<div v-if="activeType.includes(2)&&!scope.row.isFold">环比</div>
 				<div v-if="activeType.includes(3)&&!scope.row.isFold">同比</div>
 			</div>
-			<div :slot="item.prop" slot-scope="scope" class="tableItem" v-for="(item,index) in propList" :key="index">
-				<div>{{scope.row[item.prop]}}</div>
-				<div v-if="activeType.includes(1)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
-				<div v-if="activeType.includes(2)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
-				<div v-if="activeType.includes(3)&&!scope.row.isFold" :class="{red:scope.row[item.prop]<0,green:scope.row[item.prop]>0}"><span v-if="scope.row[item.prop]>0">+</span>{{scope.row[item.prop]}}%</div>
-			</div>
+      <template v-for="(item,index) in propList" :slot="item" slot-scope="scope">
+        <div class="tableItem" :key="index">
+				<div>{{scope.row[item]}}</div>
+				<div v-if="activeType.includes(1)&&!scope.row.isFold" :class="{red:scope.row[item]<0,green:scope.row[item]>0}"><span v-if="scope.row[item]>0">+</span>{{scope.row[item]}}%</div>
+				<div v-if="activeType.includes(2)&&!scope.row.isFold" :class="{red:scope.row[item]<0,green:scope.row[item]>0}"><span v-if="scope.row[item]>0">+</span>{{scope.row[item]}}%</div>
+				<div v-if="activeType.includes(3)&&!scope.row.isFold" :class="{red:scope.row[item]<0,green:scope.row[item]>0}"><span v-if="scope.row[item]>0">+</span>{{scope.row[item]}}%</div>
+        </div>
+      </template>
 		</dataTable>
 		<tipPopup ref="tipPopup" />
 	</div>
@@ -50,7 +52,8 @@
 			return {
 				activeTab: 1,
 				activeType: [1, 2, 3],
-				loading: false,
+				more: '',
+        loading:false,
 				btnList: [{
 					name: '占比',
 					value: 1
@@ -99,26 +102,15 @@
 					sort: 1,
 					width: '80px'
 				}],
-				propList: [{
-					prop: 'chengjiao'
-				}, {
-					prop: 'xiading'
-				}, {
-					prop: 'shijia'
-				}, {
-					prop: 'daodian'
-				}, {
-					prop: 'kehu'
-				}, {
-					prop: 'xiansuo'
-				}]
+				propList: ['chengjiao', 'xiading', 'shijia', 'daodian', 'kehu', 'xiansuo']
 			}
 		},
 		mounted() {
 			this.getTabList()
-			this.loading = true
+      this.loading=true    
 			setTimeout(() => {
-				this.loading = false
+        this.loading=false
+				this.more  = 'finish'
 				this.tableData = Math.random(0, 1) > 0.5 ? [] : [{
 					zhanqu: '东部战区',
 					chengjiao: 12,
@@ -156,7 +148,7 @@
 					xiansuo: 130,
 					isFold: false
 				}]
-			}, 1000)
+			}, 2000)
 		},
 		methods: {
 			openTip() {

@@ -7,7 +7,9 @@
   import { getTrend } from "../api"
   export default {
     data() {
-      return {}
+      return {
+        selected:[true,true,true]
+      }
     },
     mounted() {
       this.getTrend()
@@ -38,7 +40,8 @@
             itemGap: 30,
             textStyle: {
               fontSize: 12,
-            }
+            },
+            selected:{}
           },
           grid: {
             left: '4%',
@@ -109,6 +112,11 @@
             }
           }]
         }
+        //每次操作legend需要记录状态,切换时间纬度保留上次legend
+        let that=this
+        myChart.on('legendselectchanged', function (params) {
+          that.selected=Object.values(params.selected)
+        })
         option && myChart.setOption(option);
         window.addEventListener('resize', myChart.resize)
       }

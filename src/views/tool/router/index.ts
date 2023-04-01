@@ -27,6 +27,13 @@ const toolRoute = [{
 	meta: {
 		title: 'table'
 	}
+},{
+	path: 'room',
+	name: 'toolRoom',
+	component: () => import('@/views/tool/page/room.vue'),
+	meta: {
+		title: 'room'
+	}
 }]
 
 export default toolRoute
