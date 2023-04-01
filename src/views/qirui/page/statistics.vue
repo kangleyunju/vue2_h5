@@ -1,7 +1,7 @@
 <template>
 	<div class="statistics">
 		<div class="headerBox">
-			<img src="@/assets/logo.png">
+			<img src="@/assets/logo.png" @click="$router.push('/')">
 			<van-tabs v-model="activeTime" background="#009FB1" color="#fff" title-active-color="#fff" title-inactive-color="#fff" line-height="2px" line-width="24px" @click="changeTime">
 				<van-tab title="日" :name="1"></van-tab>
 				<van-tab title="周" :name="2"></van-tab>
@@ -58,13 +58,13 @@
 	import saleView from './saleView'
 	import trendTab from './trendTab'
 	import dataTab from './dataTab'
-  import distributionTab from './distributionTab'
+	import distributionTab from './distributionTab'
 	export default {
 		components: {
 			saleView,
 			trendTab,
 			dataTab,
-      distributionTab
+			distributionTab
 		},
 		data() {
 			return {

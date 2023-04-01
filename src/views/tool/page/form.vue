@@ -2,7 +2,7 @@
 	<div class="formContainer">
 		<van-form ref="form" :show-error="false" input-align="right" error-message-align="right" :scroll-to-error="true" @submit="formConfirm">
 			<van-field v-model="form.name" label="姓名" placeholder="请输入姓名" :rules="[{ required: true, message: '请输入姓名'}]" required autocomplete="off" maxlength="4" />
-			<van-field v-model="form.password" type="password" label="密码" placeholder="请输入密码" autocomplete="off"/>
+			<van-field v-model="form.password" type="password" label="密码" placeholder="请输入密码" autocomplete="off" />
 			<van-field v-model="form.time" label="时间" placeholder="请选择时间" @click="timeShow=true" readonly right-icon="arrow" clickable />
 			<van-field v-model="form.phone" type="tel" label="手机号" placeholder="请输入手机号" :rules="[{ required: true, message: '请输入手机号' },{ pattern: /^1[3-9]\d{9}$/, message: '手机号不正确' }]" required maxlength="11" :formatter="formatterNumber" />
 			<van-field label="开关">
@@ -41,13 +41,15 @@
 					<van-slider v-model="form.slider" />
 				</template>
 			</van-field>
+			<van-field v-model="form.cardId" label="身份证号" placeholder="身份证号" readonly clickable @click="idShow = true" right-icon="arrow" maxlength="18" />
+			<van-field v-model="form.fapiao" label="发票" placeholder="发票" readonly clickable @click="popupShow = true" right-icon="arrow" />
 			<van-field label="文件上传">
 				<template #input>
 					<van-uploader v-model="form.img" multiple :max-count="2" :after-read="afterRead" />
 				</template>
 			</van-field>
-			<van-field v-model="form.area" label="地区选择" placeholder="选择省市区" readonly clickable @click="areaShow = true" :rules="[{ required: true, message: '请选择省市区' }]" required right-icon="arrow"/>
-			<van-field v-model="form.calendar" label="日历" placeholder="选择日期范围" readonly clickable @click="calendarShow = true" right-icon="arrow"/>
+			<van-field v-model="form.area" label="地区选择" placeholder="选择省市区" readonly clickable @click="areaShow = true" :rules="[{ required: true, message: '请选择省市区' }]" required right-icon="arrow" />
+			<van-field v-model="form.calendar" label="日历" placeholder="选择日期范围" readonly clickable @click="calendarShow = true" right-icon="arrow" />
 			<van-field v-model="form.mark" type="textarea" label="备注" placeholder="请输入备注" show-word-limit maxlength="50" />
 		</van-form>
 		<div class="bottomFixed">
@@ -83,6 +85,27 @@
 			type="range"
 			allow-same-day
 			position="bottom" />
+		<van-number-keyboard
+			:show="idShow"
+			extra-key="X"
+			close-button-text="完成"
+			v-model="form.cardId"
+			@input="onInput"
+			@delete="onDelete"
+			@blur="popupShow = false" />
+		<van-popup
+			v-model="popupShow"
+			position="bottom">
+			<div class="popupBox">
+				<van-field v-model="fapiao.name" label="公司名称" placeholder="请输入公司公司名称" maxLength="18" clearable />
+				<van-field v-model="fapiao.address" label="公司地址" placeholder="请输入公司地址" maxLength="18" clearable />
+				<van-field v-model="fapiao.phone" label="联系电话" placeholder="请输入联系电话" maxLength="18" clearable />
+				<van-field v-model="fapiao.id" label="纳税人识别号" placeholder="请输入纳税人识别号" maxLength="18" clearable />
+				<van-field v-model="fapiao.bank" label="开户银行" placeholder="请输入开户银行" maxLength="18" clearable />
+				<van-field v-model="fapiao.account" label="银行账号" placeholder="请输入银行账号" maxLength="18" clearable />
+				<van-button size="small" type="primary">确定</van-button>
+			</div>
+		</van-popup>
 	</div>
 </template>
 <script>
@@ -97,8 +120,11 @@
 				currentDate: new Date(),
 				areaList: areaList,
 				areaShow: false, //地区弹窗
-				calendarShow: false ,//日历弹窗
-				loading:false
+				calendarShow: false, //日历弹窗
+				loading: false,
+				idShow: false,
+				popupShow: false,
+				fapiao: {}
 			}
 		},
 		methods: {
@@ -127,21 +153,32 @@
 					file.message = "上传完成";
 				}, 1000);
 			},
+			//身份证
+			onInput(e) {
+				// if (!this.form.cardId) {
+				// 	this.form.cardId = ''
+				// }
+				// this.form.cardId = this.form.cardId + e
+				// console.log('this.form.cardId', this.form.cardId)
+			},
+			onDelete(e) {
+				// this.form.cardId -= e
+			},
 			//提交表单
 			formConfirm() {
 				this.$refs.form.validate().then((valid) => {
 					this.$toast.loading({
-					  message: '提交中...',
-					  forbidClick: true,
+						message: '提交中...',
+						forbidClick: true,
 					})
-					setTimeout(()=>{
+					setTimeout(() => {
 						this.$toast.success('提交成功')
 						this.$router.push('/home/user')
-					},3000)
+					}, 3000)
 				}).catch(err => {
 					document.querySelector('.van-field__error-message').parentNode.scrollIntoView({
-					  block: 'center',
-					  behavior: 'smooth'
+						block: 'center',
+						behavior: 'smooth'
 					})
 				})
 			},
@@ -228,6 +265,16 @@
 				&:last-child {
 					margin: 0;
 				}
+			}
+		}
+		.popupBox {
+			height: 7rem;
+			background-color: #fff;
+			.van-button {
+				position: fixed;
+				bottom: 20px;
+				margin: 0 20px;
+				width: 90%;
 			}
 		}
 	}
