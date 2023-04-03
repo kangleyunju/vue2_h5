@@ -51,7 +51,10 @@
 			confirm-disabled-text="请选择日期"
 			type="range"
 			allow-same-day
-			position="bottom" />
+			position="bottom" 
+      :default-date="defaultDate"
+      get-container="body"
+      />
 	</div>
 </template>
 <script>
@@ -78,7 +81,8 @@
 				actions: [],
 				minDate: new Date(),
 				maxDate: new Date(),
-				isChoose: false
+				isChoose: false,
+        defaultDate:[]
 			}
 		},
 		methods: {
@@ -145,6 +149,7 @@
 		},
 		mounted() {
 			this.minDate = new Date(this.getLastYearDate())
+      this.defaultDate = [new Date(this.getDay(new Date(),-30)),new Date()]
 		}
 	}
 </script>
