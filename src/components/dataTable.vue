@@ -181,7 +181,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 0;
+      height:36px;
       font-size: 12px;
       color: #86909C;
       .van-loading {
